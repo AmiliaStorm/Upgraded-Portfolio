@@ -1,0 +1,27 @@
+/* =========================================
+   DESIGN VARIABLES
+   Colors, spacing, and styling
+   ========================================= */
+
+
+:root {
+
+  /* Background */
+
+
+  /* Forest green color*/
+  --bg: #07110f;
+
+/* lighter color*/
+  --bg-soft: #0c1815;
+
+  --card: rgba(18, 33, 29, 0.72);
+  --line: rgba(174, 255, 228, 0.12);
+  --text: #f4f1ea;
+  --muted: #b9c5bf;
+  --accent: #8dd6bc;
+  --accent-strong: #b0ffe0;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  --radius: 24px;
+  --container: 1200px;
+}
