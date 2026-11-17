@@ -1,156 +1,2309 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amilia Storm | Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#071b13">
+
   <meta
     name="description"
-    content="Portfolio of Amilia Storm – software development, bioinformatics, and data science."
-  />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    content="Amilia Storm — bioinformatics, machine learning and scientific software projects."
+  >
+
+  <title>Amilia Storm | Bioinformatics & Scientific Software</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet"
-  />
-  <link rel="stylesheet" href="styles.css" />
+  >
+
+  <style>
+
+    /* ==========================================
+       BOTANICAL ELEGANCE II
+       DESIGN SYSTEM
+    ========================================== */
+
+    :root {
+      --forest: #071b13;
+      --forest-light: #102b1f;
+      --forest-medium: #1a432d;
+
+      --ivory: #f5f0e7;
+      --paper: #f7f1e8;
+
+      --gold: #c9a66a;
+      --gold-light: #ecd6a0;
+
+      --ink: #183329;
+      --muted: #68736a;
+      --line: #ded8cd;
+
+      --width: 1200px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+
+      background: var(--ivory);
+      color: var(--ink);
+
+      font-family: "Instrument Sans", sans-serif;
+      line-height: 1.7;
+
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    .container {
+      width: min(var(--width), calc(100% - 88px));
+      margin-inline: auto;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: var(--forest);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--gold-light);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 12px;
+      padding: 10px;
+      background: white;
+      color: black;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* ==========================================
+       NAVIGATION
+    ========================================== */
+
+    .site-header {
+      position: relative;
+      z-index: 20;
+
+      background: rgba(5, 22, 14, 0.92);
+      border-bottom: 1px solid rgba(216, 185, 111, 0.35);
+
+      color: var(--ivory);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+
+      min-height: 82px;
+    }
+
+    .wordmark {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 2.1rem;
+      font-weight: 500;
+
+      white-space: nowrap;
+      letter-spacing: -0.015em;
+    }
+
+    .navigation nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      margin-left: auto;
+    }
+
+    .navigation nav a {
+      font-size: 0.82rem;
+      color: #e1e5d9;
+
+      transition: color 0.2s ease;
+    }
+
+    .navigation nav a:hover {
+      color: var(--gold-light);
+    }
+
+    .nav-github {
+      padding-left: 25px;
+
+      border-left: 1px solid rgba(255,255,255,0.2);
+
+      font-size: 0.82rem;
+      color: var(--gold-light);
+    }
+
+    .nav-github:hover {
+      color: white;
+    }
+
+    /* ==========================================
+       HERO
+    ========================================== */
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+
+      color: var(--ivory);
+
+      background:
+        radial-gradient(
+          ellipse at 80% 47%,
+          #1c4731 0%,
+          #0a271a 37%,
+          #05150f 86%
+        );
+    }
+
+    .hero::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+      z-index: -1;
+
+      opacity: 0.38;
+
+      background-image:
+        radial-gradient(
+          rgba(230, 206, 143, 0.35) 0.6px,
+          transparent 0.9px
+        );
+
+      background-size: 39px 39px;
+
+      mask-image: linear-gradient(
+        90deg,
+        transparent 28%,
+        black 95%
+      );
+    }
+
+    .hero::after {
+      content: "";
+
+      position: absolute;
+      inset: auto 0 0;
+
+      height: 180px;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          transparent,
+          rgba(0,0,0,0.15)
+        );
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+
+      align-items: center;
+      gap: 18px;
+
+      min-height: 620px;
+
+      padding-block: 62px 28px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 3;
+      padding-block: 25px;
+    }
+
+    .hero-edition {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      margin-bottom: 33px;
+
+      color: #dbc898;
+
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+    }
+
+    .status-point {
+      display: inline-block;
+
+      width: 7px;
+      height: 7px;
+      flex-shrink: 0;
+
+      border-radius: 50%;
+      background: var(--gold-light);
+
+      box-shadow:
+        0 0 0 5px rgba(224,185,102,0.13);
+    }
+
+    .edition-number {
+      color: rgba(237,231,208,0.56);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+
+      margin-bottom: 28px;
+
+      color: var(--gold-light);
+
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .short-rule {
+      display: inline-block;
+
+      width: 34px;
+      height: 1px;
+      flex-shrink: 0;
+
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      margin: 0 0 30px;
+
+      font-family: "Cormorant Garamond", Georgia, serif;
+
+      font-size: clamp(4.4rem, 6.8vw, 7.4rem);
+      font-weight: 500;
+
+      line-height: 0.93;
+      letter-spacing: -0.045em;
+
+      text-wrap: balance;
+
+      text-shadow: 0 7px 50px rgba(0,0,0,0.18);
+    }
+
+    .hero h1 em {
+      color: #e5bc76;
+      font-weight: 500;
+    }
+
+    .hero-lead {
+      max-width: 455px;
+      margin-bottom: 32px;
+
+      color: #cbd5c8;
+
+      font-size: 1.01rem;
+      line-height: 1.85;
+    }
+
+    /* ==========================================
+       HERO BUTTONS
+    ========================================== */
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      gap: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 42px;
+
+      min-height: 53px;
+      padding: 15px 24px;
+
+      font-size: 0.75rem;
+      font-weight: 700;
+
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-gold {
+      background:
+        linear-gradient(
+          120deg,
+          #e7d29d,
+          #bd9654
+        );
+
+      color: #14261c;
+
+      box-shadow:
+        0 12px 38px rgba(198,157,85,0.12);
+    }
+
+    .button-gold:hover {
+      background: #eedbaa;
+    }
+
+    .underlined-link {
+      padding-bottom: 5px;
+
+      border-bottom: 1px solid var(--gold);
+
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.15rem;
+    }
+
+    .underlined-link span {
+      color: var(--gold);
+    }
+
+    /* ==========================================
+       INTERACTIVE DNA
+    ========================================== */
+
+    .hero-art {
+      position: relative;
+      isolation: isolate;
+
+      display: grid;
+      place-items: center;
+
+      min-width: 0;
+      height: 550px;
+    }
+
+    .dna-aura {
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          ellipse at 51% 50%,
+          rgba(210,172,91,0.2),
+          transparent 53%
+        );
+
+      filter: blur(22px);
+    }
+
+    #dna-canvas {
+      position: relative;
+
+      width: 100%;
+      height: 550px;
+
+      cursor: grab;
+      touch-action: none;
+    }
+
+    #dna-canvas:active {
+      cursor: grabbing;
+    }
+
+    #dna-canvas canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Gold orbital decorations */
+
+    .orbit {
+      position: absolute;
+      pointer-events: none;
+
+      left: 50%;
+      top: 50%;
+
+      width: min(98%, 530px);
+      aspect-ratio: 1;
+
+      border-radius: 50%;
+      border: 1px solid rgba(225,194,130,0.21);
+
+      transform:
+        translate(-50%, -50%)
+        rotate(-17deg);
+    }
+
+    .orbit-one::before {
+      content: "";
+
+      position: absolute;
+
+      width: 8px;
+      height: 8px;
+
+      top: 15%;
+      left: 15%;
+
+      border-radius: 50%;
+      background: #e2c182;
+
+      box-shadow:
+        0 0 22px rgba(230,193,125,0.8);
+    }
+
+    .orbit-two {
+      width: min(76%, 420px);
+
+      border-style: dashed;
+      border-color: rgba(225,194,130,0.12);
+
+      transform:
+        translate(-50%, -50%)
+        rotate(28deg);
+    }
+
+    /* Scientific labels */
+
+    .dna-readout {
+      position: absolute;
+      z-index: 2;
+
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      color: rgba(238,232,211,0.55);
+
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+
+      pointer-events: none;
+    }
+
+    .dna-readout strong {
+      color: #e3c58f;
+      font-weight: 500;
+    }
+
+    .dna-readout-top {
+      top: 9%;
+      left: 0;
+    }
+
+    .dna-readout-bottom {
+      bottom: 13%;
+      right: 0;
+      text-align: right;
+    }
+
+    .art-caption {
+      position: absolute;
+
+      right: 0;
+      bottom: 16px;
+
+      color: rgba(227,203,150,0.7);
+
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+
+      pointer-events: none;
+    }
+
+    .hero-end {
+      position: relative;
+      z-index: 2;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+
+      padding: 10px 0 30px;
+
+      color: #b2bfb1;
+
+      font-size: 0.61rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-end a {
+      color: #e6c991;
+    }
+
+    .hero-end a:hover {
+      color: white;
+    }
+
+    /* ==========================================
+       FEATURED PROJECTS
+    ========================================== */
+
+    .projects-section {
+      padding: 83px 0 115px;
+
+      background:
+        radial-gradient(
+          ellipse at 15% 0%,
+          #fffaf0,
+          transparent 55%
+        ),
+        var(--paper);
+    }
+
+    .section-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+
+      padding-bottom: 19px;
+
+      border-bottom: 1px solid #c9bba5;
+
+      color: #8f713f;
+
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+    }
+
+    .section-topline span:last-child {
+      color: #817b70;
+    }
+
+    .project-intro {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+
+      gap: 60px;
+      margin: 42px 0 35px;
+    }
+
+    .project-intro h2,
+    .skills-header h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+
+      font-size: clamp(3.7rem, 5.5vw, 6.1rem);
+      font-weight: 500;
+
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .project-intro h2 em,
+    .skills-header h2 em {
+      color: #9d7b40;
+      font-weight: 500;
+    }
+
+    .project-intro p {
+      max-width: 390px;
+
+      color: #65685f;
+      font-size: 0.94rem;
+    }
+
+    /* Project rows */
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 0.94fr 1.06fr;
+
+      align-items: center;
+      gap: 60px;
+
+      padding: 38px 0;
+
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-info {
+      min-width: 0;
+    }
+
+    .project-index {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+
+      color: #876938;
+
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+    }
+
+    .project-index span:first-child {
+      min-width: 46px;
+
+      color: #a3864e;
+
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.6rem;
+      font-style: italic;
+      font-weight: 500;
+
+      line-height: 1;
+    }
+
+    .project-info h3 {
+      margin: 16px 0 17px;
+
+      font-family: "Cormorant Garamond", Georgia, serif;
+
+      font-size: clamp(2.6rem, 3.75vw, 4.6rem);
+      font-weight: 500;
+
+      line-height: 0.97;
+      letter-spacing: -0.035em;
+
+      transition: color 0.25s ease;
+    }
+
+    .project-info h3 em {
+      font-weight: 500;
+    }
+
+    .project-row:hover .project-info h3 {
+      color: #8a672d;
+    }
+
+    .project-info > p {
+      max-width: 490px;
+
+      margin-bottom: 16px;
+
+      color: #62685f;
+
+      font-size: 0.95rem;
+      line-height: 1.85;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      margin: 20px 0 27px;
+    }
+
+    .project-tags span {
+      padding: 5px 12px;
+
+      border: 1px solid #d8d1c3;
+      border-radius: 999px;
+
+      color: #536456;
+      font-size: 0.73rem;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    .project-links a {
+      color: #795b2d;
+
+      font-size: 0.72rem;
+      font-weight: 700;
+
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+
+      border-bottom: 1px solid transparent;
+    }
+
+    .project-links a:hover {
+      border-color: currentColor;
+    }
+
+    /* Project images */
+
+    .project-photo {
+      position: relative;
+      display: block;
+
+      overflow: hidden;
+      aspect-ratio: 1.95;
+
+      border: 1px solid rgba(13,37,26,0.18);
+
+      background:
+        linear-gradient(135deg, #173426, #091e16);
+
+      box-shadow:
+        0 22px 45px rgba(28,42,30,0.12);
+
+      transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+    }
+
+    .project-photo img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+      object-position: center;
+
+      transition: transform 0.45s ease;
+    }
+
+    .project-photo:hover {
+      transform: translateY(-3px);
+
+      box-shadow:
+        0 30px 60px rgba(28,42,30,0.2);
+    }
+
+    .project-photo:hover img {
+      transform: scale(1.04);
+    }
+
+    .photo-covid {
+      background: #f4f3ed;
+    }
+
+    .photo-covid img {
+      object-fit: contain;
+    }
+
+    .project-photo > span {
+      position: absolute;
+
+      right: 14px;
+      bottom: 14px;
+
+      display: grid;
+      place-items: center;
+
+      width: 36px;
+      height: 36px;
+
+      background: var(--gold-light);
+      color: var(--forest);
+
+      font-size: 1.1rem;
+    }
+
+    /* ==========================================
+       ABOUT
+    ========================================== */
+
+    .about-section {
+      position: relative;
+      overflow: hidden;
+
+      padding: 120px 0;
+
+      color: #eee9df;
+
+      background:
+        radial-gradient(
+          ellipse at 5% 75%,
+          #245039 0%,
+          transparent 43%
+        ),
+        radial-gradient(
+          ellipse at 90% 15%,
+          #153625 0%,
+          transparent 50%
+        ),
+        var(--forest);
+    }
+
+    .about-grid {
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+      grid-template-columns: 1fr 0.85fr;
+
+      gap: 100px;
+    }
+
+    .about-section h2,
+    .contact-section h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+
+      font-size: clamp(4rem, 6vw, 7rem);
+      font-weight: 500;
+
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+
+    .about-section h2 em,
+    .contact-section h2 em {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .about-content {
+      padding-top: 33px;
+    }
+
+    .about-content p {
+      margin-bottom: 20px;
+
+      color: #bfc9bf;
+
+      font-size: 0.98rem;
+      line-height: 1.9;
+    }
+
+    .about-content .about-lead {
+      color: #eee9df;
+
+      font-family: "Cormorant Garamond", Georgia, serif;
+
+      font-size: 1.7rem;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .about-link {
+      display: inline-block;
+
+      margin-top: 16px;
+      padding-bottom: 7px;
+
+      border-bottom: 1px solid var(--gold);
+
+      color: var(--gold-light);
+      font-size: 0.88rem;
+    }
+
+    /* Botanical decoration */
+
+    .botanical-lines {
+      position: absolute;
+
+      right: -110px;
+      top: 30px;
+
+      width: 300px;
+      height: 540px;
+
+      opacity: 0.18;
+      transform: rotate(-19deg);
+    }
+
+    .botanical-lines span {
+      position: absolute;
+
+      width: 125px;
+      height: 340px;
+
+      border: 1px solid var(--gold);
+      border-radius: 90% 0 90% 0;
+
+      transform-origin: bottom left;
+    }
+
+    .botanical-lines span:nth-child(2) {
+      transform: rotate(29deg);
+    }
+
+    .botanical-lines span:nth-child(3) {
+      transform: rotate(59deg);
+    }
+
+    /* ==========================================
+       EXPERTISE
+    ========================================== */
+
+    .skills-section {
+      padding: 110px 0;
+      background: var(--ivory);
+    }
+
+    .skills-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+
+      gap: 50px;
+      margin: 50px 0;
+    }
+
+    .skills-header h2 {
+      max-width: 700px;
+    }
+
+    .skills-header p {
+      max-width: 300px;
+
+      color: #66736b;
+      font-size: 0.9rem;
+    }
+
+    .skill-columns {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .skill-columns article {
+      padding: 36px 25px 40px 0;
+    }
+
+    .skill-columns article + article {
+      padding-left: 25px;
+      border-left: 1px solid var(--line);
+    }
+
+    .skill-columns article > span {
+      color: #9f8050;
+
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.2rem;
+      font-style: italic;
+    }
+
+    .skill-columns h3 {
+      margin: 18px 0;
+
+      font-family: "Cormorant Garamond", serif;
+
+      font-size: 1.9rem;
+      font-weight: 500;
+      line-height: 1.05;
+    }
+
+    .skill-columns p {
+      min-height: 65px;
+
+      color: #68736a;
+      font-size: 0.85rem;
+    }
+
+    .skill-columns article > div {
+      color: #4b6353;
+
+      font-size: 0.8rem;
+      line-height: 1.9;
+    }
+
+    /* ==========================================
+       CONTACT
+    ========================================== */
+
+    .contact-section {
+      padding: 100px 0;
+
+      background: var(--forest-light);
+      color: var(--ivory);
+
+      border-top: 1px solid rgba(216,178,103,0.25);
+    }
+
+    .contact-layout {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+
+      gap: 50px;
+    }
+
+    .contact-section h2 {
+      max-width: 800px;
+      font-size: clamp(3.7rem, 5.5vw, 6rem);
+    }
+
+    .contact-section p:not(.eyebrow) {
+      margin-top: 20px;
+      color: #c7d3c6;
+    }
+
+    .contact-layout > .button {
+      white-space: nowrap;
+    }
+
+    /* ==========================================
+       FOOTER
+    ========================================== */
+
+    .footer {
+      padding: 28px 0;
+
+      background: #06170f;
+      color: #eee9df;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .footer-inner > span,
+    .footer-inner > a:last-child {
+      color: #b6c1b4;
+      font-size: 0.76rem;
+    }
+
+    /* ==========================================
+       SCROLL ANIMATIONS
+    ========================================== */
+
+    .will-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+
+      transition:
+        opacity 0.65s ease,
+        transform 0.65s ease;
+    }
+
+    .will-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================
+       TABLET
+    ========================================== */
+
+    @media (max-width: 1000px) {
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        min-height: 0;
+
+        padding-top: 80px;
+      }
+
+      .hero h1 {
+        font-size: clamp(4.5rem, 10vw, 7rem);
+      }
+
+      .hero-art,
+      #dna-canvas {
+        height: 430px;
+      }
+
+      .project-row {
+        gap: 32px;
+      }
+
+      .about-grid {
+        gap: 55px;
+      }
+
+      .skill-columns {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+
+      .skill-columns article:nth-child(3) {
+        border-left: 0;
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .skill-columns article:nth-child(4) {
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    /* ==========================================
+       MOBILE
+    ========================================== */
+
+    @media (max-width: 700px) {
+
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .navigation {
+        flex-wrap: wrap;
+        gap: 13px;
+        padding: 16px 0;
+
+        min-height: 0;
+      }
+
+      .navigation nav {
+        order: 3;
+
+        width: 100%;
+        margin: 0;
+
+        justify-content: space-between;
+        gap: 15px;
+      }
+
+      .nav-github {
+        margin-left: auto;
+      }
+
+      .hero-grid {
+        padding-top: 62px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3.8rem, 12.4vw, 6rem);
+      }
+
+      .hero-art,
+      #dna-canvas {
+        height: 350px;
+      }
+
+      .hero-edition {
+        margin-bottom: 22px;
+
+        gap: 9px;
+
+        font-size: 0.49rem;
+        letter-spacing: 0.1em;
+      }
+
+      .orbit {
+        width: 92%;
+      }
+
+      .dna-readout {
+        font-size: 0.45rem;
+      }
+
+      .dna-readout-top {
+        top: 7%;
+        left: 2%;
+      }
+
+      .dna-readout-bottom {
+        bottom: 8%;
+        right: 2%;
+      }
+
+      .hero-end {
+        font-size: 0.52rem;
+      }
+
+      .hero-end > span:first-child {
+        display: none;
+      }
+
+      .projects-section,
+      .skills-section {
+        padding: 70px 0;
+      }
+
+      .section-topline {
+        font-size: 0.58rem;
+      }
+
+      .section-topline span:last-child {
+        display: none;
+      }
+
+      .project-intro,
+      .skills-header {
+        display: block;
+        margin: 38px 0 10px;
+      }
+
+      .project-intro p,
+      .skills-header p {
+        margin-top: 22px;
+      }
+
+      .project-row {
+        grid-template-columns: 1fr;
+        gap: 23px;
+        padding: 42px 0;
+      }
+
+      .project-row .project-photo {
+        grid-row: 1;
+      }
+
+      .project-info h3 {
+        font-size: 3.4rem;
+      }
+
+      .project-photo {
+        aspect-ratio: 1.7;
+      }
+
+      .about-section {
+        padding: 80px 0;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .about-content {
+        padding: 0;
+      }
+
+      .about-section h2 {
+        font-size: 4.5rem;
+      }
+
+      .skill-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .skill-columns article,
+      .skill-columns article + article {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+
+        padding: 28px 0;
+      }
+
+      .skill-columns article:first-child {
+        border-top: 0;
+      }
+
+      .skill-columns p {
+        min-height: 0;
+      }
+
+      .contact-layout {
+        display: block;
+      }
+
+      .contact-section {
+        padding: 80px 0;
+      }
+
+      .contact-layout > .button {
+        margin-top: 30px;
+      }
+
+      .footer-inner {
+        flex-wrap: wrap;
+      }
+
+      .footer-inner .wordmark {
+        width: 100%;
+      }
+    }
+
+    /* ==========================================
+       REDUCED MOTION
+    ========================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .will-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .button,
+      .project-photo,
+      .project-photo img {
+        transition: none;
+      }
+
+      .button:hover,
+      .project-photo:hover,
+      .project-photo:hover img {
+        transform: none;
+      }
+    }
+
+
+/* ==========================================
+   BOTANICAL ELEGANCE
+   FLOATING PROJECT PANELS
+========================================== */
+
+.project-photo {
+  position: relative;
+  display: block;
+  isolation: isolate;
+
+  overflow: hidden;
+  padding: 0;
+
+  aspect-ratio: 1.95;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(185, 151, 91, 0.22);
+  border-radius: 8px;
+
+  box-shadow:
+    0 8px 18px rgba(21, 48, 33, 0.06),
+    0 24px 55px rgba(21, 48, 33, 0.13),
+    0 45px 80px rgba(21, 48, 33, 0.05);
+
+  transform: translateY(0);
+
+  transition:
+    transform 450ms cubic-bezier(.2, .8, .2, 1),
+    box-shadow 450ms ease,
+    border-color 450ms ease;
+}
+
+/* Scientific images */
+
+.project-photo img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  transition:
+    transform 650ms cubic-bezier(.2, .8, .2, 1);
+}
+
+/* Individual image backgrounds */
+
+.photo-age {
+  background: #050c12;
+}
+
+.photo-covid {
+  background: #ffffff;
+}
+
+.photo-cell {
+  background: #10251a;
+}
+
+/* Floating hover */
+
+.project-photo:hover {
+  transform: translateY(-12px);
+
+  border-color: rgba(200, 166, 91, 0.65);
+
+  box-shadow:
+    0 15px 25px rgba(21, 48, 33, 0.08),
+    0 35px 65px rgba(21, 48, 33, 0.18),
+    0 60px 100px rgba(21, 48, 33, 0.08);
+}
+
+/* Subtle image zoom */
+
+.project-photo:hover img {
+  transform: scale(1.035);
+}
+
+/* Gold action arrow */
+
+.project-photo > span {
+  position: absolute;
+  z-index: 2;
+
+  right: 18px;
+  bottom: 18px;
+
+  display: grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: #d8b573;
+  color: #10251a;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 350ms ease,
+    background-color 350ms ease;
+}
+
+.project-photo:hover > span {
+  transform: rotate(45deg);
+  background: #ecd39b;
+}
+
+/* Keyboard accessibility */
+
+.project-photo:focus-visible {
+  outline: 2px solid #c8a65b;
+  outline-offset: 5px;
+}
+
+/* Motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .project-photo,
+  .project-photo img,
+  .project-photo > span {
+    transition: none;
+  }
+
+  .project-photo:hover,
+  .project-photo:hover img,
+  .project-photo:hover > span {
+    transform: none;
+  }
+}
+
+
+/* Clickable resume heading */
+
+.resume-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.resume-link:hover {
+  color: #f5d99b;
+}
+
+.resume-link em {
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease;
+}
+
+.resume-link:hover em,
+.resume-link:focus-visible em {
+  border-bottom-color: #d4af6a;
+}
+
+
+  </style>
+
 </head>
+
 <body>
-  <div class="page-glow"></div>
 
-  <header class="site-header">
-    <div class="container nav">
-      <a href="#" class="logo">Amilia Storm</a>
+  <a class="skip-link" href="#main">
+    Skip to content
+  </a>
 
-      <nav class="nav-links">
+  <!-- ==========================================
+       NAVIGATION
+  ========================================== -->
+
+  <header class="site-header" id="top">
+
+    <div class="container navigation">
+
+      <a href="#top" class="wordmark">
+        Amilia Storm
+      </a>
+
+      <nav aria-label="Main navigation">
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
-        <a href="#skills">Skills</a>
+        <a href="#skills">Expertise</a>
         <a href="#contact">Contact</a>
       </nav>
+
+      <a
+        class="nav-github"
+        href="https://github.com/AmiliaStorm"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub ↗
+      </a>
+
     </div>
+
   </header>
 
-  <main>
-    <section class="hero">
+  <main id="main">
+
+    <!-- ==========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero" aria-labelledby="hero-title">
+
       <div class="container hero-grid">
-        <div class="hero-text">
-          <p class="eyebrow">SOFTWARE DEVELOPMENT · BIOINFORMATICS · DATA SCIENCE</p>
-          <h1>Amilia Storm</h1>
-          <p class="intro">
-            I build software and computational tools to make them practical and
-            easy to understand.
+
+        <div class="hero-copy">
+
+          <div class="hero-edition">
+
+            <span class="status-point"></span>
+
+            Portfolio
+
+            <span class="edition-number">
+              / 2026
+            </span>
+
+          </div>
+
+          <p class="eyebrow">
+
+            <span class="short-rule"></span>
+
+            BIOINFORMATICS · DATA SCIENCE · SCIENTIFIC SOFTWARE
+
           </p>
 
-          <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary">View Projects</a>
-            <a href="#about" class="btn btn-secondary">About Me</a>
+          <h1 id="hero-title">
+
+            Exploring<br>
+            biology through<br>
+            <em>code</em>
+
+          </h1>
+
+          <p class="hero-lead">
+
+            Computational biology, machine learning and
+            interactive tools for understanding human health,
+            ageing and cellular function.
+
+          </p>
+
+          <div class="hero-actions">
+
+            <a class="button button-gold" href="#projects">
+
+              Explore my work
+
+              <span aria-hidden="true">→</span>
+
+            </a>
+
+            <a class="underlined-link" href="#about">
+
+              About me <span aria-hidden="true">↗</span>
+
+            </a>
+
           </div>
+
         </div>
 
-        <div class="hero-visual">
-          <div class="orb"></div>
+        <!-- ======================================
+             INTERACTIVE DNA
+        ====================================== -->
+
+        <div class="hero-art">
+
+          <div class="dna-aura" aria-hidden="true"></div>
+
+          <div class="orbit orbit-one" aria-hidden="true"></div>
+
+          <div class="orbit orbit-two" aria-hidden="true"></div>
+
+          <div
+            class="dna-readout dna-readout-top"
+            aria-hidden="true"
+          >
+
+            <strong>DOUBLE HELIX</strong>
+
+          </div>
+
+          <div
+            class="dna-readout dna-readout-bottom"
+            aria-hidden="true"
+          >
+
+            <span></span>
+
+            <strong>INTERACTIVE MODEL</strong>
+
+          </div>
+
+          <!-- Keep this ID for dna.js -->
+
+          <div
+            id="dna-canvas"
+            role="img"
+            aria-label="Interactive 3D DNA double helix"
+          ></div>
+
+          <span class="art-caption">
+
+            
+
+          </span>
+
         </div>
+
       </div>
+
+      <div class="container hero-end">
+
+        <span>
+          SCIENTIFIC DISCOVERY THROUGH COMPUTATION
+        </span>
+
+        <a href="#projects">
+          SCROLL TO EXPLORE ↓
+        </a>
+
+      </div>
+
     </section>
 
-    <section id="projects" class="section">
+    <!-- ==========================================
+         FEATURED PROJECTS
+    ========================================== -->
+
+    <section
+      class="projects-section"
+      id="projects"
+      aria-labelledby="projects-heading"
+    >
+
       <div class="container">
-        <div class="section-heading">
-          <h2>Featured Projects</h2>
-          <a href="#" class="section-link">Explore all projects →</a>
+
+        <div class="section-topline">
+
+          <span>01 / SELECTED WORK</span>
+
+          <span>RESEARCH &amp; SOFTWARE DEVELOPMENT</span>
+
         </div>
 
-        <div class="project-grid">
-          <article class="project-card">
-            <div class="project-image"></div>
-            <h3>Cell Function Explorer</h3>
-            <p>
-              Interactive 3D model for exploring cell structure and function.
-            </p>
-            <div class="tags">
-              <span>Three.js</span>
-              <span>JavaScript</span>
-              <span>Biology</span>
-            </div>
-          </article>
+        <div class="project-intro">
 
-          <article class="project-card">
-            <div class="project-image"></div>
-            <h3>Biological Age Predictor</h3>
-            <p>
-              Machine learning model for predicting biological age from health data.
-            </p>
-            <div class="tags">
-              <span>Python</span>
-              <span>SQL</span>
-              <span>ML</span>
-            </div>
-          </article>
+          <h2 id="projects-heading">
+            Featured <em>projects</em>
+          </h2>
 
-          <article class="project-card">
-            <div class="project-image"></div>
-            <h3>COVID-19 scRNA-seq</h3>
-            <p>
-              Analysis of single-cell RNA sequencing data to identify immune responses.
-            </p>
-            <div class="tags">
-              <span>R</span>
-              <span>Seurat</span>
-              <span>Data Analysis</span>
-            </div>
-          </article>
+          <p>
+            A selection of work at the intersection
+            of biology, data and interactive technology.
+          </p>
+
         </div>
+
+        <div class="project-list">
+
+          <!-- ======================================
+               PROJECT 01 — BIOLOGICAL AGE
+          ====================================== -->
+
+          <article class="project-row">
+
+            <div class="project-info">
+
+              <div class="project-index">
+
+                <span>01</span>
+
+                <span>MACHINE LEARNING / DATA SCIENCE</span>
+
+              </div>
+
+              <h3>
+                Biological Age<br>
+                <em>Predictor</em>
+              </h3>
+
+              <p>
+                Python and SQL workflows comparing
+                biological-age methods with machine-learning
+                models evaluated against NHANES mortality outcomes.
+              </p>
+
+              <div class="project-tags">
+
+                <span>Python</span>
+                <span>SQL</span>
+                <span>scikit-learn</span>
+
+              </div>
+
+              <div class="project-links">
+
+                <a href="./biological-age-predictor.html">
+                  View case study ↗
+                </a>
+
+                <a
+                  href="https://github.com/AmiliaStorm/biological-age-predictor"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Source code ↗
+                </a>
+
+              </div>
+
+            </div>
+
+            <a
+              class="project-photo photo-age"
+              href="./biological-age-predictor.html"
+              aria-label="View Biological Age Predictor case study"
+            >
+
+              <img
+                src="./images/biological-age-predictor.jpg"
+                alt="Biological Age Predictor analysis visualization"
+                loading="lazy"
+              >
+
+              <span aria-hidden="true">↗</span>
+
+            </a>
+
+          </article>
+
+          <!-- ======================================
+               PROJECT 02 — COVID-19
+          ====================================== -->
+
+          <article class="project-row">
+
+            <div class="project-info">
+
+              <div class="project-index">
+
+                <span>02</span>
+
+                <span>BIOINFORMATICS / TRANSCRIPTOMICS</span>
+
+              </div>
+
+              <h3>
+
+                COVID-19<br>
+                <em>Single-Cell Analysis</em>
+
+              </h3>
+
+              <p>
+                Single-cell RNA-seq analysis of more than
+                81,000 immune cells using R and Seurat to
+                investigate cell populations and
+                condition-associated gene expression.
+              </p>
+
+              <div class="project-tags">
+
+                <span>R</span>
+                <span>Seurat</span>
+                <span>scRNA-seq</span>
+
+              </div>
+
+              <div class="project-links">
+
+                <a href="./covid19-scrnaseq.html">
+                  View case study ↗
+                </a>
+
+                <a
+                  href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Source code ↗
+                </a>
+
+              </div>
+
+            </div>
+
+            <a
+              class="project-photo photo-covid"
+              href="./covid19-scrnaseq.html"
+              aria-label="View COVID-19 case study"
+            >
+
+              <img
+                src="./images/umap_celltypes.png"
+                alt="UMAP plot of annotated immune-cell populations"
+                loading="lazy"
+              >
+
+              <span aria-hidden="true">↗</span>
+
+            </a>
+
+          </article>
+
+          <!-- ======================================
+               PROJECT 03 — CELL FUNCTION EXPLORER
+          ====================================== -->
+
+          <article class="project-row">
+
+            <div class="project-info">
+
+              <div class="project-index">
+
+                <span>03</span>
+
+                <span>SCIENTIFIC SOFTWARE / VISUALIZATION</span>
+
+              </div>
+
+              <h3>
+
+                Cell Function<br>
+                <em>Explorer</em>
+
+              </h3>
+
+              <p>
+                An interactive 3D application for exploring
+                cellular structures, organelle function and
+                a simulated protein-production pathway.
+              </p>
+
+              <div class="project-tags">
+
+                <span>JavaScript</span>
+                <span>Three.js</span>
+                <span>WebGL</span>
+
+              </div>
+
+              <div class="project-links">
+
+                <a
+                  href="https://amiliastorm.github.io/Cell-Visualization-Explorer/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Live demo ↗
+                </a>
+
+                <a
+                  href="https://github.com/AmiliaStorm/Cell-Visualization-Explorer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Source code ↗
+                </a>
+
+              </div>
+
+            </div>
+
+            <a
+              class="project-photo photo-cell"
+              href="https://amiliastorm.github.io/Cell-Visualization-Explorer/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open live Cell Function Explorer"
+            >
+
+              <img
+                src="./images/cell-visualization-explorer.jpg"
+                alt="Interactive three-dimensional eukaryotic cell"
+                loading="lazy"
+              >
+
+              <span aria-hidden="true">↗</span>
+
+            </a>
+
+          </article>
+
+        </div>
+
       </div>
+
     </section>
 
-    <section id="about" class="section section-alt">
+    <!-- ==========================================
+         ABOUT
+    ========================================== -->
+
+    <section
+      class="about-section"
+      id="about"
+      aria-labelledby="about-heading"
+    >
+
+      <div class="botanical-lines" aria-hidden="true">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </div>
+
       <div class="container about-grid">
-        <div>
-          <h2>About</h2>
-          <p>
-            I’m a bioinformatics student and developer with a strong interest in
-            software development, data analysis, computational biology, and
-            interactive visualization.
-          </p>
-          <p>
-            My work combines technical problem-solving with scientific solutions,
-            with experience across Java, Python, SQL, JavaScript, R, and machine learning.
-          </p>
-        </div>
 
         <div>
-          <h2 id="skills">Core Technologies</h2>
-          <div class="tags large-tags">
-            <span>Python</span>
-            <span>Java</span>
-            <span>SQL</span>
-            <span>JavaScript</span>
-            <span>R</span>
-            <span>Three.js</span>
-            <span>Git</span>
-            <span>Machine Learning</span>
-          </div>
+
+          <p class="eyebrow">
+            02 / ABOUT ME
+          </p>
+
+          <h2 id="about-heading">
+
+            Science<br>
+            & computation<em>
+            
+
+          </h2>
+
         </div>
+
+        <div class="about-content">
+
+          <p class="about-lead">
+            I'm a bioinformatics student at the
+            University of Bergen, interested in
+            how software and data can help us
+            better understand living systems.
+          </p>
+
+          <p>
+            My projects bring together biology,
+            statistical analysis and software engineering —
+            from interpreting single-cell expression
+            to modelling health outcomes and designing
+            interactive 3D experiences.
+          </p>
+
+          <p>
+            I value clear communication, reproducible
+            methods and tools that turn complex ideas
+            into something people can explore.
+          </p>
+
+          <a
+            class="about-link"
+            href="https://github.com/AmiliaStorm"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explore my GitHub ↗
+          </a>
+
+        </div>
+
       </div>
+
     </section>
+
+    <!-- ==========================================
+         EXPERTISE
+    ========================================== -->
+
+    <section
+      class="skills-section"
+      id="skills"
+      aria-labelledby="skills-heading"
+    >
+
+      <div class="container">
+
+        <div class="section-topline">
+
+          <span>03 / EXPERTISE</span>
+
+          <span>TECHNOLOGIES &amp; METHODS</span>
+
+        </div>
+
+        <div class="skills-header">
+
+          <h2 id="skills-heading">
+
+            A multidisciplinary
+            <em>toolkit</em>
+
+          </h2>
+
+          <p>
+            Technical skills across software
+            engineering, biological data analysis
+            and visual computing.
+          </p>
+
+        </div>
+
+        <div class="skill-columns">
+
+          <article>
+
+            <span>01</span>
+
+            <h3>Software development</h3>
+
+            <p>
+              Programming, algorithms and application design
+            </p>
+
+            <div>
+              Java · Python · JavaScript · SQL · Git
+            </div>
+
+          </article>
+
+          <article>
+
+            <span>02</span>
+
+            <h3>Data science &amp; ML</h3>
+
+            <p>
+              Processing, predictive modelling and evaluation
+            </p>
+
+            <div>
+              scikit-learn · Pandas · NumPy · R
+            </div>
+
+          </article>
+
+          <article>
+
+            <span>03</span>
+
+            <h3>Bioinformatics</h3>
+
+            <p>
+              Computational approaches to cellular data
+            </p>
+
+            <div>
+              Seurat · scRNA-seq · DESeq2 · AlphaFold2
+            </div>
+
+          </article>
+
+          <article>
+
+            <span>04</span>
+
+            <h3>Interactive visualization</h3>
+
+            <p>
+              Browser-based scientific experiences
+            </p>
+
+            <div>
+              Three.js · WebGL · HTML · CSS
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==========================================
+         CONTACT
+    ========================================== -->
+
+    <section
+      class="contact-section"
+      id="contact"
+      aria-labelledby="contact-heading"
+    >
+
+      <div class="container contact-layout">
+
+        <div>
+
+          <p class="eyebrow">
+            04 / GET IN TOUCH
+          </p>
+
+          <h2 id="contact-heading">
+
+           
+  <h2>
+  Interested?
+  <a href="/cv" class="resume-link">
+    <em>Have a look at my resume</em>
+  </a>
+  </h2>
+
+
+          </h2>
+
+          <p>
+            Interested in bioinformatics,
+            data science or scientific software?
+            I'd love to connect.
+          </p>
+
+        </div>
+
+        <a
+          class="button button-gold"
+          href="mailto:AmiliaSt@hotmail.com"
+        >
+
+          Get in touch
+
+          <span aria-hidden="true">↗</span>
+
+        </a>
+
+      </div>
+
+    </section>
+
   </main>
 
-  <footer id="contact" class="site-footer">
-    <div class="container footer-content">
-      <div>
-        <h2>Contact</h2>
-      </div>
+  <!-- ==========================================
+       FOOTER
+  ========================================== -->
 
-      <div class="footer-links">
-        <a href="https://github.com/AmiliaStorm" target="_blank">GitHub</a>
-        <a href="#">LinkedIn</a>
-        <a href="mailto:AmiliaSt@hotmail.com">Email</a>
-      </div>
+  <footer class="footer">
+
+    <div class="container footer-inner">
+
+      <a class="wordmark" href="#top">
+        Amilia Storm
+      </a>
+
+      <span>© 2026 Amilia Storm</span>
+
+      <a href="#top">
+        Back to top ↑
+      </a>
+
     </div>
+
   </footer>
 
-  <script src="script.js"></script>
+  <!-- ==========================================
+       THREE.JS DNA
+  ========================================== -->
+
+  <script type="module" src="./dna.js"></script>
+
+  <!-- ==========================================
+       SCROLL REVEAL ANIMATIONS
+  ========================================== -->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (reducedMotion) {
+        return;
+      }
+
+      if (!("IntersectionObserver" in window)) {
+        return;
+      }
+
+      const items = document.querySelectorAll(
+        ".project-row, .about-grid, .skills-header, .skill-columns article"
+      );
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach((entry) => {
+
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+
+          });
+
+        },
+        {
+          threshold: 0.07,
+          rootMargin: "0px 0px 55px 0px"
+        }
+      );
+
+      items.forEach((item) => {
+        observer.observe(item);
+      });
+
+      items.forEach((item) => {
+        if (!item.classList.contains("revealed")) {
+          item.classList.add("will-reveal");
+        }
+      });
+
+    });
+
+  </script>
+
 </body>
 </html>

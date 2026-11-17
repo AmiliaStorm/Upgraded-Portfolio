@@ -1,0 +1,1486 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Single-cell RNA-seq analysis of COVID-19 and healthy PBMCs by Amilia Storm.">
+  <title>COVID-19 Single-Cell Transcriptomics | Amilia Storm</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap");
+
+    /* ========================================
+       GLOBAL DESIGN SYSTEM
+    ======================================== */
+
+    :root {
+      --bg: #07110f;
+      --surface: #0c1815;
+      --surface-2: #12211d;
+      --border: rgba(174,255,228,.14);
+      --mint: #8dd6bc;
+      --text: #f4f1ea;
+      --soft: #b9c5bf;
+      --muted: #8caaa0;
+      --radius: 24px;
+      color-scheme: dark;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(86,167,134,.12), transparent 32%),
+        radial-gradient(circle at 90% 20%, rgba(141,214,188,.06), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      line-height: 1.65;
+    }
+
+    ::selection {
+      background: rgba(141,214,188,.28);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #b0ffe0;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h3 {
+      line-height: 1.3;
+    }
+
+    .shell {
+      width: min(1200px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* ========================================
+       NAVIGATION
+    ======================================== */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      min-height: 88px;
+      padding: 16px max(24px, calc((100vw - 1200px)/2));
+      background: rgba(7,17,15,.94);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .brand > span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(174,255,228,.28);
+      border-radius: 12px;
+      background: rgba(141,214,188,.08);
+      color: var(--mint);
+      font-size: .88rem;
+    }
+
+    .brand > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand strong {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .brand small {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .69rem;
+    }
+
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 22px;
+      margin-left: auto;
+    }
+
+    .topbar nav a {
+      color: var(--soft);
+      font-size: .86rem;
+    }
+
+    .topbar nav a.active,
+    .topbar nav a:hover {
+      color: var(--mint);
+    }
+
+    .github {
+      padding: 10px 19px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--mint);
+      font-size: .85rem;
+      font-weight: 600;
+    }
+
+    .github:hover {
+      background: rgba(141,214,188,.08);
+    }
+
+    /* ========================================
+       HERO
+    ======================================== */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      align-items: center;
+      gap: 48px;
+      padding-block: 80px 90px;
+    }
+
+    .hero-copy {
+      min-width: 0;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 46px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .kicker {
+      color: var(--mint);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .hero h1,
+    .heading h2,
+    .overview h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      letter-spacing: -.035em;
+    }
+
+    .hero h1 {
+      margin: 32px 0;
+      font-size: clamp(3.5rem, 5.6vw, 6rem);
+      line-height: 1.02;
+      overflow-wrap: anywhere;
+    }
+
+    .hero h1 span {
+      color: var(--mint);
+    }
+
+    .lead,
+    .overview p,
+    .workflow p,
+    .media-card p,
+    .insights p {
+      color: var(--soft);
+      line-height: 1.85;
+    }
+
+    .lead {
+      max-width: 650px;
+      font-size: .99rem;
+    }
+
+    /* ========================================
+       TECHNOLOGY TAGS
+    ======================================== */
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .chips span {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(141,214,188,.055);
+      color: var(--mint);
+      font-size: .75rem;
+    }
+
+    /* ========================================
+       BUTTONS
+    ======================================== */
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 22px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      font-size: .88rem;
+      font-weight: 600;
+      text-align: center;
+      transition: background-color .18s ease, transform .18s ease;
+    }
+
+    .btn:hover {
+      background: rgba(141,214,188,.08);
+      transform: translateY(-2px);
+    }
+
+    .btn.primary {
+      background: linear-gradient(110deg, #c7f3e2, #8dd6bc);
+      color: #07110f;
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    .btn.primary:hover {
+      background: #b0ffe0;
+      color: #07110f;
+    }
+
+    /* ========================================
+       HERO VISUAL
+    ======================================== */
+
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .hero-visual > img {
+      width: 100%;
+      max-height: 460px;
+      padding: 16px;
+      object-fit: contain;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .metric-panel {
+      width: 100%;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .metric-panel h3 {
+      margin-bottom: 18px;
+    }
+
+    .metric-panel p {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metric-panel p:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border: 0;
+    }
+
+    .metric-panel span {
+      color: var(--muted);
+    }
+
+    .metric-panel strong {
+      color: #b0ffe0;
+    }
+
+    /* ========================================
+       SECTIONS
+    ======================================== */
+
+    .section {
+      padding-block: 85px;
+    }
+
+    .heading {
+      max-width: 850px;
+      margin-bottom: 35px;
+    }
+
+    .heading h2,
+    .overview h2 {
+      font-size: clamp(2.5rem, 4vw, 3.7rem);
+      line-height: 1.12;
+    }
+
+    .card {
+      padding: 36px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* ========================================
+       OVERVIEW
+    ======================================== */
+
+    .overview {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      align-items: start;
+      gap: 40px;
+    }
+
+    .overview dl {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin: 0;
+    }
+
+    .overview dl div {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    dt {
+      margin-bottom: 8px;
+      color: var(--mint);
+      font-size: .75rem;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    /* ========================================
+       WORKFLOW + INSIGHT CARDS
+    ======================================== */
+
+    .workflow,
+    .insights {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .workflow article,
+    .insights article,
+    .media-card {
+      min-width: 0;
+      padding: 28px;
+      background: linear-gradient(145deg, var(--surface-2), var(--surface));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .workflow article {
+      position: relative;
+      padding-bottom: 58px;
+    }
+
+    .workflow b {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--mint);
+    }
+
+    .workflow a {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--mint);
+      font-size: .875rem;
+    }
+
+    .workflow a:hover {
+      text-decoration: underline;
+    }
+
+    .insights p,
+    .media-card p {
+      font-size: .9rem;
+    }
+
+    /* ========================================
+       RESULTS
+    ======================================== */
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 20px;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: auto;
+      margin-block: 18px;
+      background: white;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    /* ========================================
+       CODE EDITOR
+    ======================================== */
+
+    .code-layout {
+      display: grid;
+      grid-template-columns: minmax(0,220px) minmax(0,1fr) minmax(0,260px);
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 15px;
+      background: #0c1815;
+    }
+
+    .tab,
+    .tabs a {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: transparent;
+      border: 0;
+      border-radius: 10px;
+      color: var(--soft);
+      text-align: left;
+      font-size: .8rem;
+      overflow-wrap: anywhere;
+    }
+
+    .tab.active,
+    .tab:hover,
+    .tabs a:hover {
+      background: #193329;
+      color: #b0ffe0;
+    }
+
+    .editor {
+      min-width: 0;
+      overflow: auto;
+      background: #050d0b;
+      border-inline: 1px solid var(--border);
+    }
+
+    .snippet {
+      display: none;
+    }
+
+    .snippet.active {
+      display: block;
+    }
+
+    pre {
+      max-width: 100%;
+      margin: 0;
+      padding: 26px;
+      overflow-x: auto;
+      color: #e1eee7;
+      font-size: .85rem;
+      line-height: 1.7;
+      tab-size: 2;
+    }
+
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .snippet span {
+      color: #c5dbbd;
+    }
+
+    .snippet em {
+      color: var(--mint);
+      font-style: normal;
+    }
+
+    .code-layout aside {
+      padding: 24px;
+    }
+
+    .code-layout aside p {
+      color: var(--soft);
+      line-height: 1.7;
+    }
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 35px max(24px, calc((100vw - 1200px)/2));
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid #b0ffe0;
+      outline-offset: 5px;
+    }
+
+    /* ========================================
+       RESPONSIVE DESIGN
+    ======================================== */
+
+    @media (max-width: 1050px) {
+      .topbar {
+        flex-wrap: wrap;
+      }
+
+      .topbar nav {
+        order: 3;
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .hero,
+      .overview {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        width: 100%;
+        max-width: 720px;
+      }
+
+      .code-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .tab,
+      .tabs a {
+        width: auto;
+      }
+
+      .editor {
+        border-inline: 0;
+        border-block: 1px solid var(--border);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .shell {
+        width: calc(100% - 30px);
+      }
+
+      .topbar {
+        padding-inline: 15px;
+      }
+
+      .topbar nav {
+        gap: 12px;
+      }
+
+      .brand small {
+        display: none;
+      }
+
+      .hero {
+        gap: 32px;
+        padding-block: 48px 50px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 12vw, 4.5rem);
+      }
+
+      .back {
+        margin-bottom: 25px;
+      }
+
+      .workflow,
+      .insights,
+      .media-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding-block: 55px;
+      }
+
+      .card,
+      .overview {
+        padding: 22px;
+      }
+
+      .overview dl {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions .btn {
+        width: 100%;
+      }
+
+      pre {
+        padding: 18px;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .btn {
+        transition: none;
+      }
+
+      .btn:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ========================================
+       NAVIGATION
+  ======================================== -->
+
+  <header class="topbar" id="top">
+    <a class="brand" href="./index.html">
+      <span>AS</span>
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics &amp; Data Science</small>
+      </div>
+    </a>
+
+    <nav aria-label="Project navigation">
+      <a href="./index.html">Home</a>
+      <a class="active" href="#top">Project</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#media">Results</a>
+      <a href="#code">Code</a>
+    </nav>
+
+    <a class="github"
+       href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+       target="_blank"
+       rel="noopener noreferrer">
+      GitHub
+    </a>
+  </header>
+
+  <main>
+
+    <!-- ========================================
+         HERO
+    ======================================== -->
+
+    <section class="hero shell">
+      <div class="hero-copy">
+
+        <a class="back" href="./index.html#projects">
+          ← Back to projects
+        </a>
+
+        <p class="kicker">
+          Bioinformatics / Single-Cell Transcriptomics
+        </p>
+
+        <h1>
+          COVID-19<br>
+          Single-Cell
+          <span>Transcriptomics</span>
+        </h1>
+
+        <p class="lead">
+          Single-cell RNA-seq analysis of peripheral blood immune cells
+          from COVID-19 patients and healthy controls, using Seurat to
+          identify immune-cell populations and investigate
+          condition-associated transcriptional differences.
+        </p>
+
+        <div class="chips">
+          <span>R</span>
+          <span>Seurat</span>
+          <span>scRNA-seq</span>
+          <span>GEO</span>
+          <span>ggplot2</span>
+          <span>dplyr</span>
+          <span>Transcriptomics</span>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="#media">
+            View results
+          </a>
+
+          <a class="btn"
+             href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+             target="_blank"
+             rel="noopener noreferrer">
+            &lt;/&gt; View code
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img
+          src="./images/umap_celltypes.png"
+          alt="UMAP visualization of annotated PBMC immune-cell populations"
+        >
+
+        <div class="metric-panel">
+          <h3>Project profile</h3>
+
+          <p><span>Dataset</span><strong>GSE150728</strong></p>
+          <p><span>Cells</span><strong>81,353</strong></p>
+          <p><span>Samples</span><strong>13</strong></p>
+          <p><span>Populations</span><strong>19</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         OVERVIEW
+    ======================================== -->
+
+    <section class="overview shell card">
+      <div>
+        <p class="kicker">Overview</p>
+
+        <p>
+          Bulk RNA sequencing measures average gene expression across
+          mixed cell populations, potentially masking changes occurring
+          within specific immune-cell populations. Single-cell RNA
+          sequencing resolves expression at the individual-cell level,
+          allowing immune populations and their transcriptional states
+          to be investigated separately.
+        </p>
+
+        <p>
+          This project applies a standard single-cell analysis pipeline
+          to publicly available PBMC data from COVID-19 patients and
+          healthy controls, with particular focus on immune-cell
+          composition and transcriptional changes within monocytes.
+        </p>
+      </div>
+
+      <dl>
+        <div><dt>Dataset</dt><dd>GSE150728</dd></div>
+        <div><dt>Samples</dt><dd>7 COVID / 6 Healthy</dd></div>
+        <div><dt>Platform</dt><dd>10x Genomics</dd></div>
+        <div><dt>Focus</dt><dd>PBMC Transcriptomics</dd></div>
+      </dl>
+    </section>
+
+    <!-- ========================================
+         RESEARCH QUESTION
+    ======================================== -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Research question</p>
+        <h2>
+          Which immune-cell populations and transcriptional states
+          differ between COVID-19 patients and healthy controls?
+        </h2>
+      </div>
+
+      <div class="insights">
+        <article>
+          <h3>Cell identity</h3>
+          <p>
+            Which immune-cell populations can be recovered from the
+            PBMC single-cell dataset using unsupervised clustering
+            and canonical marker genes?
+          </p>
+        </article>
+
+        <article>
+          <h3>Immune composition</h3>
+          <p>
+            Are particular immune-cell populations proportionally
+            enriched or depleted in COVID-19 samples?
+          </p>
+        </article>
+
+        <article>
+          <h3>Monocyte state</h3>
+          <p>
+            How does gene expression within classical monocytes differ
+            between COVID-19 patients and healthy controls?
+          </p>
+        </article>
+
+        <article>
+          <h3>Inflammatory signalling</h3>
+          <p>
+            Do inflammatory and antigen-presentation-associated genes
+            show coordinated transcriptional changes?
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================================
+         WORKFLOW
+    ======================================== -->
+
+    <section class="shell section" id="workflow">
+      <div class="heading">
+        <p class="kicker">Workflow</p>
+        <h2>From raw single-cell data to biological interpretation</h2>
+      </div>
+
+      <div class="workflow">
+        <article>
+          <b>01</b>
+          <h3>Data acquisition</h3>
+          <p>
+            Retrieved publicly available PBMC single-cell RNA-seq data
+            from the NCBI Gene Expression Omnibus.
+          </p>
+          <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE150728"
+             target="_blank"
+             rel="noopener noreferrer">
+            GEO GSE150728
+          </a>
+        </article>
+
+        <article>
+          <b>02</b>
+          <h3>Quality control</h3>
+          <p>
+            Filtered low-quality cells, probable empty droplets and
+            problematic cells using detected-feature counts and
+            mitochondrial read content.
+          </p>
+          <a href="https://satijalab.org/seurat/"
+             target="_blank"
+             rel="noopener noreferrer">
+            Seurat
+          </a>
+        </article>
+
+        <article>
+          <b>03</b>
+          <h3>Normalization &amp; reduction</h3>
+          <p>
+            Log-normalized expression, selected highly variable genes,
+            scaled expression and performed PCA before constructing
+            the neighbourhood graph.
+          </p>
+          <a href="#code">View methods</a>
+        </article>
+
+        <article>
+          <b>04</b>
+          <h3>Clustering &amp; annotation</h3>
+          <p>
+            Applied graph-based clustering and UMAP, then annotated
+            populations using canonical immune-cell marker genes.
+          </p>
+          <a href="#media">View UMAP</a>
+        </article>
+
+        <article>
+          <b>05</b>
+          <h3>Condition comparison</h3>
+          <p>
+            Compared immune-cell composition and performed
+            condition-specific differential expression within
+            classical monocytes.
+          </p>
+          <a href="#findings">Key findings</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================================
+         RESULTS
+    ======================================== -->
+
+    <section class="shell section media-grid" id="media">
+
+      <article class="media-card">
+        <p class="kicker">Cellular landscape</p>
+
+        <img
+          src="./images/umap_celltypes.png"
+          alt="UMAP showing annotated immune-cell populations"
+          loading="lazy"
+        >
+
+        <p>
+          UMAP visualization of the annotated PBMC landscape.
+          Nineteen immune-cell populations were identified using
+          cluster-specific expression patterns and canonical markers.
+        </p>
+      </article>
+
+      <article class="media-card">
+        <p class="kicker">Monocyte expression</p>
+
+        <img
+          src="./images/monocyte_de_violin.png"
+          alt="Violin plots comparing monocyte gene expression between COVID-19 and healthy samples"
+          loading="lazy"
+        >
+
+        <p>
+          Classical monocytes from COVID-19 samples showed increased
+          expression of inflammatory S100-family genes alongside
+          reduced expression of several antigen-presentation-associated
+          genes.
+        </p>
+      </article>
+
+      <article class="media-card">
+        <p class="kicker">Analysis scale</p>
+
+        <h3>81,353 cells after quality control</h3>
+
+        <p>
+          Approximately 157,000 raw droplets were processed across
+          thirteen samples. After quality-control filtering,
+          81,353 cells were retained for downstream analysis.
+        </p>
+
+        <p>
+          The final dataset included seven COVID-19 samples
+          and six healthy controls.
+        </p>
+      </article>
+
+    </section>
+
+    <!-- ========================================
+         KEY FINDINGS
+    ======================================== -->
+
+    <section class="shell section" id="findings">
+      <div class="heading">
+        <p class="kicker">Key findings</p>
+        <h2>COVID-associated transcriptional changes in monocytes</h2>
+      </div>
+
+      <div class="insights">
+        <article>
+          <h3>↑ S100A8 / S100A9 / S100A12</h3>
+          <p>
+            Classical monocytes from COVID-19 samples showed increased
+            expression of inflammatory alarmin genes including
+            S100A8, S100A9 and S100A12.
+          </p>
+        </article>
+
+        <article>
+          <h3>↓ MHC class II expression</h3>
+          <p>
+            HLA-DRB1, HLA-DQB1 and CD74 showed reduced expression
+            in COVID-associated classical monocytes, alongside
+            reduced HLA-B expression.
+          </p>
+        </article>
+
+        <article>
+          <h3>IFN-stimulated monocytes</h3>
+          <p>
+            A distinct interferon-stimulated monocyte population
+            marked by genes including IFI27, IFI6 and IFITM3
+            was observed predominantly in COVID-19 samples.
+          </p>
+        </article>
+
+        <article>
+          <h3>Coordinated immune-state shift</h3>
+          <p>
+            Together, the observed expression patterns indicate an
+            association between COVID-19 status and a more inflammatory
+            monocyte transcriptional state with reduced expression
+            of antigen-presentation-associated genes.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================================
+         EXPLORATORY FINDING
+    ======================================== -->
+
+    <section class="overview shell card">
+      <div>
+        <p class="kicker">Exploratory result</p>
+
+        <h2>IFN-stimulated monocyte expansion</h2>
+
+        <p>
+          An interferon-stimulated monocyte population was nearly absent
+          from healthy samples but appeared at variable levels across
+          multiple COVID-19 samples.
+        </p>
+
+        <p>
+          However, the sample-level difference did not reach
+          statistical significance in the Wilcoxon rank-sum comparison
+          (p = 0.29). Given the small cohort and substantial
+          patient-to-patient heterogeneity, this result is treated as
+          exploratory rather than confirmatory.
+        </p>
+      </div>
+
+      <dl>
+        <div><dt>COVID samples</dt><dd>7</dd></div>
+        <div><dt>Healthy samples</dt><dd>6</dd></div>
+        <div><dt>Test</dt><dd>Wilcoxon</dd></div>
+        <div><dt>p-value</dt><dd>0.29</dd></div>
+      </dl>
+    </section>
+
+    <!-- ========================================
+         INTERACTIVE CODE EDITOR
+    ======================================== -->
+
+    <section class="shell section code-section" id="code">
+      <div class="heading">
+        <p class="kicker">Analysis code</p>
+        <h2>Core methods from the Seurat workflow</h2>
+      </div>
+
+      <div class="code-layout">
+
+        <div class="tabs">
+          <button class="tab active" type="button" data-tab="qc">
+            quality_control.R
+          </button>
+
+          <button class="tab" type="button" data-tab="clustering">
+            clustering.R
+          </button>
+
+          <button class="tab" type="button" data-tab="annotation">
+            annotation.R
+          </button>
+
+          <button class="tab" type="button" data-tab="de">
+            differential_expression.R
+          </button>
+
+          <a href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+             target="_blank"
+             rel="noopener noreferrer">
+            Open full repository
+          </a>
+        </div>
+
+        <div class="editor">
+
+          <!-- Quality control -->
+          <pre id="qc" class="snippet active"><code><span># Quality-control filtering</span>
+
+combined_seurat &lt;- subset(
+    combined_seurat,
+    subset =
+        nFeature_RNA &gt; 250 &amp;
+        nFeature_RNA &lt; 2500 &amp;
+        percent.mt &lt; 20
+)
+
+combined_seurat &lt;- NormalizeData(
+    combined_seurat,
+    normalization.method = <em>"LogNormalize"</em>,
+    scale.factor = 10000
+)
+
+combined_seurat &lt;- FindVariableFeatures(
+    combined_seurat,
+    selection.method = <em>"vst"</em>,
+    nfeatures = 2000
+)</code></pre>
+
+          <!-- Clustering -->
+          <pre id="clustering" class="snippet"><code><span># PCA, graph construction and clustering</span>
+
+combined_seurat &lt;- ScaleData(
+    combined_seurat
+)
+
+combined_seurat &lt;- RunPCA(
+    combined_seurat
+)
+
+combined_seurat &lt;- FindNeighbors(
+    combined_seurat,
+    dims = 1:20
+)
+
+combined_seurat &lt;- FindClusters(
+    combined_seurat,
+    resolution = 0.5
+)
+
+combined_seurat &lt;- RunUMAP(
+    combined_seurat,
+    dims = 1:20
+)</code></pre>
+
+          <!-- Annotation -->
+          <pre id="annotation" class="snippet"><code><span># Identify cluster marker genes</span>
+
+cluster_markers &lt;- FindAllMarkers(
+    combined_seurat,
+    only.pos = TRUE
+)
+
+DimPlot(
+    combined_seurat,
+    reduction = <em>"umap"</em>,
+    group.by = <em>"cell_type"</em>,
+    label = TRUE,
+    repel = TRUE
+) + NoLegend()</code></pre>
+
+          <!-- Differential expression -->
+          <pre id="de" class="snippet"><code><span># Compare conditions within monocytes</span>
+
+monocyte_de &lt;- FindMarkers(
+    monocyte_subset,
+    ident.1 = <em>"COVID"</em>,
+    ident.2 = <em>"Healthy"</em>,
+    group.by = <em>"condition"</em>
+)
+
+VlnPlot(
+    monocyte_subset,
+    features = c(
+        <em>"S100A8"</em>,
+        <em>"HLA-DRB1"</em>
+    ),
+    group.by = <em>"condition"</em>,
+    pt.size = 0.1
+)</code></pre>
+
+        </div>
+
+        <aside>
+          <h3>What this demonstrates</h3>
+
+          <p>
+            Single-cell data processing, quality control,
+            dimensionality reduction, graph-based clustering,
+            cell-type annotation, statistical comparison and
+            biological interpretation using R and Seurat.
+          </p>
+
+          <a class="btn"
+             href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+             target="_blank"
+             rel="noopener noreferrer">
+            Open GitHub
+          </a>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ========================================
+         LIMITATIONS
+    ======================================== -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Limitations</p>
+        <h2>Interpreting the results</h2>
+      </div>
+
+      <div class="insights">
+        <article>
+          <h3>Small cohort</h3>
+          <p>
+            The study contains seven COVID-19 samples and six healthy
+            controls, limiting statistical power for patient-level comparisons.
+          </p>
+        </article>
+
+        <article>
+          <h3>Pseudo-replication</h3>
+          <p>
+            Individual cells from the same patient are correlated and
+            should not be interpreted as fully independent biological replicates.
+          </p>
+        </article>
+
+        <article>
+          <h3>Disease severity</h3>
+          <p>
+            Severity metadata was not available for the analyzed
+            COVID-19 samples, so the project does not distinguish
+            mild from severe disease.
+          </p>
+        </article>
+
+        <article>
+          <h3>PBMC contamination</h3>
+          <p>
+            A small red-blood-cell contamination cluster was detected
+            and excluded from biological interpretation.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================================
+         FUTURE WORK
+    ======================================== -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Future work</p>
+        <h2>Extending the analysis</h2>
+      </div>
+
+      <div class="workflow">
+        <article>
+          <b>01</b>
+          <h3>Pseudobulk analysis</h3>
+          <p>
+            Aggregate expression at the patient level before
+            differential-expression testing to reduce pseudo-replication.
+          </p>
+        </article>
+
+        <article>
+          <b>02</b>
+          <h3>Patient-level modelling</h3>
+          <p>
+            Incorporate biological replicate structure directly into
+            statistical testing and downstream interpretation.
+          </p>
+        </article>
+
+        <article>
+          <b>03</b>
+          <h3>Severity cohorts</h3>
+          <p>
+            Extend the analysis to datasets containing explicit
+            disease-severity and clinical metadata.
+          </p>
+        </article>
+
+        <article>
+          <b>04</b>
+          <h3>RNA velocity</h3>
+          <p>
+            Explore transcriptional-state dynamics using intronic
+            and exonic read information where compatible data are available.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================================
+         PROJECT SKILLS
+    ======================================== -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Project skills</p>
+        <h2>What this project demonstrates</h2>
+      </div>
+
+      <div class="insights">
+        <article>
+          <h3>Single-cell analysis</h3>
+          <p>
+            Processing and interpreting high-dimensional scRNA-seq data
+            through quality control, normalization, clustering
+            and dimensionality reduction.
+          </p>
+        </article>
+
+        <article>
+          <h3>Cell-type annotation</h3>
+          <p>
+            Combining unsupervised clustering with canonical marker
+            expression to identify biologically meaningful
+            immune-cell populations.
+          </p>
+        </article>
+
+        <article>
+          <h3>Statistical awareness</h3>
+          <p>
+            Distinguishing cell-level observations from biological
+            replicates and explicitly considering cohort size,
+            pseudo-replication and non-significant findings.
+          </p>
+        </article>
+
+        <article>
+          <h3>Scientific programming</h3>
+          <p>
+            Reproducible analysis using R, Seurat, ggplot2, dplyr,
+            tidyr and structured bioinformatics workflows.
+          </p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================
+       FOOTER
+  ======================================== -->
+
+  <footer>
+    <a class="brand" href="#top">
+      <span>AS</span>
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics &amp; Data Science</small>
+      </div>
+    </a>
+
+    <p>© 2026 Amilia Storm</p>
+
+    <a href="mailto:AmiliaSt@hotmail.com">
+      Get in touch
+    </a>
+  </footer>
+
+  <!-- ========================================
+       JAVASCRIPT — INTERACTIVE CODE TABS
+  ======================================== -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const tabs = document.querySelectorAll(
+        ".tabs .tab[data-tab]"
+      );
+
+      const snippets = document.querySelectorAll(
+        ".editor .snippet"
+      );
+
+      tabs.forEach((tab) => {
+        tab.setAttribute(
+          "aria-pressed",
+          String(tab.classList.contains("active"))
+        );
+
+        tab.addEventListener("click", () => {
+          const target = tab.dataset.tab;
+
+          tabs.forEach((item) => {
+            const selected = item === tab;
+
+            item.classList.toggle("active", selected);
+
+            item.setAttribute(
+              "aria-pressed",
+              String(selected)
+            );
+          });
+
+          snippets.forEach((snippet) => {
+            const selected = snippet.id === target;
+
+            snippet.classList.toggle("active", selected);
+            snippet.hidden = !selected;
+          });
+        });
+      });
+
+      snippets.forEach((snippet) => {
+        snippet.hidden = !snippet.classList.contains("active");
+      });
+    });
+  </script>
+
+</body>
+</html>
