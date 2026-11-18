@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="AGER protein structure analysis case study by Amilia Storm."
+  />
+
+  <title>AGER Protein Structure Analysis | Amilia Storm</title>
+
+  <link rel="stylesheet" href="./ager.css?v=3" />
+</head>
+
+<body>
+  <!-- Navigation -->
+
+  <header class="topbar" id="top">
+    <a class="brand" href="./index.html">
+      <span>AS</span>
+
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics & Data Science</small>
+      </div>
+    </a>
+
+    <nav>
+      <a href="./index.html">Home</a>
+      <a class="active" href="#top">Project</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#media">Results</a>
+      <a href="#code">Code</a>
+    </nav>
+
+    <a
+      class="github"
+      href="https://github.com/AmiliaStorm"
+      target="_blank"
+      rel="noreferrer"
+    >
+      GitHub
+    </a>
+  </header>
+
+  <main>
+    <!-- Hero -->
+
+    <section class="hero shell">
+      <div class="hero-copy">
+        <a class="back" href="./index.html#projects">
+          ← Back to projects
+        </a>
+
+        <p class="kicker">
+          Bioinformatics / Protein Structure
+        </p>
+
+        <h1>
+          Protein Structure
+          <br />
+          Analysis:
+          <span>AGER</span>
+        </h1>
+
+        <p class="lead">
+          Exploring the AGER protein using UniProt, Ensembl, ClinVar,
+          PDB and AlphaFold2/ColabFold to connect sequence information,
+          genetic variation and predicted protein structure.
+        </p>
+
+        <div class="chips">
+          <span>AlphaFold2</span>
+          <span>ColabFold</span>
+          <span>UniProt</span>
+          <span>Ensembl</span>
+          <span>ClinVar</span>
+          <span>PDB</span>
+          <span>Python</span>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="#video">
+            ▶ Watch demo
+          </a>
+
+          <a class="btn" href="#code">
+            &lt;/&gt; View code
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img
+          src="./images/ager-pymol-cartoon.png"
+          alt="AGER protein structure rendered in PyMOL"
+        />
+
+        <div class="metric-panel">
+          <h3>Project profile</h3>
+
+          <p>
+            <span>Protein</span>
+            <strong>AGER</strong>
+          </p>
+
+          <p>
+            <span>Organism</span>
+            <strong>Homo sapiens</strong>
+          </p>
+
+          <p>
+            <span>UniProt</span>
+            <strong>Q15109</strong>
+          </p>
+
+          <p>
+            <span>Length</span>
+            <strong>404 aa</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview -->
+
+    <section class="overview shell card">
+      <div>
+        <p class="kicker">Overview</p>
+
+        <p>
+          AGER, also known as the receptor for advanced glycation end
+          products, is a cell-surface pattern-recognition receptor involved
+          in inflammatory signalling. This project combined biological
+          databases, API-based data retrieval and protein-structure
+          prediction to build a connected view of the protein.
+        </p>
+      </div>
+
+      <dl>
+        <div>
+          <dt>Gene</dt>
+          <dd>AGER</dd>
+        </div>
+
+        <div>
+          <dt>Accession</dt>
+          <dd>Q15109</dd>
+        </div>
+
+        <div>
+          <dt>Focus</dt>
+          <dd>Structure</dd>
+        </div>
+
+        <div>
+          <dt>Format</dt>
+          <dd>Notebook</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Workflow -->
+
+    <section class="shell section" id="workflow">
+      <div class="heading">
+        <p class="kicker">Workflow</p>
+
+        <h2>
+          From biological question to structure interpretation
+        </h2>
+      </div>
+
+      <div class="workflow">
+        <article>
+          <b>01</b>
+
+          <h3>Sequence & protein</h3>
+
+          <p>
+            Retrieved protein identity, function, sequence and biological
+            annotations.
+          </p>
+
+          <a
+            href="https://www.uniprot.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            UniProt
+          </a>
+        </article>
+
+        <article>
+          <b>02</b>
+
+          <h3>Gene annotation</h3>
+
+          <p>
+            Explored transcripts, exons, gene location and genomic context.
+          </p>
+
+          <a
+            href="https://www.ensembl.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ensembl
+          </a>
+        </article>
+
+        <article>
+          <b>03</b>
+
+          <h3>Genetic variation</h3>
+
+          <p>
+            Investigated missense variants and available interpretations.
+          </p>
+
+          <a
+            href="https://www.ncbi.nlm.nih.gov/clinvar/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            ClinVar
+          </a>
+        </article>
+
+        <article>
+          <b>04</b>
+
+          <h3>Structural data</h3>
+
+          <p>
+            Compared experimentally determined structures and methods.
+          </p>
+
+          <a
+            href="https://www.rcsb.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            PDB
+          </a>
+        </article>
+
+        <article>
+          <b>05</b>
+
+          <h3>Structure prediction</h3>
+
+          <p>
+            Generated ranked models and inspected prediction confidence.
+          </p>
+
+          <a
+            href="https://colabfold.com"
+            target="_blank"
+            rel="noreferrer"
+          >
+            ColabFold
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Video and results -->
+
+    <section class="shell section media-grid" id="media">
+      <article class="media-card" id="video">
+        <p class="kicker">Project video</p>
+
+        <!-- Replace this placeholder with the video code below later. -->
+
+        <div class="video-placeholder">
+          <div class="play">▶</div>
+
+          <strong>AGER walkthrough</strong>
+
+          <span>
+            Add your video as videos/ager-demo.mp4
+          </span>
+        </div>
+
+        <!--
+        <video
+          class="project-video"
+          controls
+          poster="./images/ager-pymol-cartoon.png"
+        >
+          <source
+            src="./videos/ager-demo.mp4"
+            type="video/mp4"
+          />
+
+          Your browser does not support video.
+        </video>
+        -->
+
+        <p>
+          A short walkthrough of the databases, notebook, structure
+          prediction and key findings.
+        </p>
+      </article>
+
+      <article class="media-card">
+        <p class="kicker">Structure visualisation</p>
+
+        <img
+          src="./images/ager-pymol-cartoon.png"
+          alt="AGER protein cartoon representation"
+        />
+
+        <p>
+          PyMOL cartoon representation from an experimentally available
+          AGER structure.
+        </p>
+      </article>
+
+      <article class="media-card">
+        <p class="kicker">Sequence coverage</p>
+
+        <img
+          src="./images/sequence-coverage.png"
+          alt="ColabFold sequence coverage plot"
+        />
+
+        <p>
+          Multiple-sequence-alignment coverage used by the
+          structure-prediction workflow.
+        </p>
+      </article>
+    </section>
+
+    <!-- Ranked models -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Predicted models</p>
+
+        <h2>
+          Ranked AlphaFold2 / ColabFold outputs
+        </h2>
+      </div>
+
+      <div class="gallery">
+        <figure>
+          <img
+            src="./images/model-1.png"
+            alt="Ranked AGER model 1"
+          />
+
+          <figcaption>Ranked model 1</figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="./images/model-2.png"
+            alt="Ranked AGER model 2"
+          />
+
+          <figcaption>Ranked model 2</figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="./images/model-3.png"
+            alt="Ranked AGER model 3"
+          />
+
+          <figcaption>Ranked model 3</figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="./images/model-4.png"
+            alt="Ranked AGER model 4"
+          />
+
+          <figcaption>Ranked model 4</figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="./images/model-5.png"
+            alt="Ranked AGER model 5"
+          />
+
+          <figcaption>Ranked model 5</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Code demo -->
+
+    <section class="shell section code-section" id="code">
+      <div class="heading">
+        <p class="kicker">Demo code</p>
+
+        <h2>
+          Real methods used in the notebook
+        </h2>
+      </div>
+
+      <div class="code-layout">
+        <div class="tabs">
+          <button
+            class="tab active"
+            type="button"
+            data-tab="uniprot"
+          >
+            fetch_uniprot.py
+          </button>
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="ensembl"
+          >
+            ensembl_api.py
+          </button>
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="pdb"
+          >
+            pdb_lookup.py
+          </button>
+
+          <a
+            href="./notebooks/AGER-analysis.ipynb"
+            download
+          >
+            Download analysis notebook
+          </a>
+
+          <a
+            href="./notebooks/AGER-ColabFold.ipynb"
+            download
+          >
+            Download ColabFold notebook
+          </a>
+        </div>
+
+        <div class="editor">
+          <pre
+            id="uniprot"
+            class="snippet active"
+          ><code><span>import</span> requests
+<span>from</span> io <span>import</span> BytesIO
+<span>import</span> pandas <span>as</span> pd
+
+protein_accession = <em>"Q15109"</em>
+
+response = requests.get(
+    f<em>"https://rest.uniprot.org/uniprotkb/{protein_accession}.tsv"</em>
+)
+
+uniprot_tsv = response.content
+
+protein_df = pd.read_csv(
+    BytesIO(uniprot_tsv),
+    delimiter=<em>"\t"</em>
+)
+
+print(protein_df)</code></pre>
+
+          <pre
+            id="ensembl"
+            class="snippet"
+          ><code><span>import</span> requests
+
+gene_name = <em>"AGER"</em>
+
+server = <em>"https://rest.ensembl.org"</em>
+
+endpoint = (
+    f<em>"/xrefs/symbol/homo_sapiens/{gene_name}?"</em>
+)
+
+response = requests.get(
+    server + endpoint,
+    headers={
+        <em>"Content-Type"</em>:
+        <em>"application/json"</em>
+    }
+)
+
+gene_records = response.json()
+
+print(gene_records)</code></pre>
+
+          <pre
+            id="pdb"
+            class="snippet"
+          ><code><span>import</span> requests
+
+experiment_type = {}
+
+<span>for</span> pdb_id <span>in</span> pdb_ids:
+    response = requests.get(
+        f<em>"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"</em>
+    )
+
+    <span>if</span> response.status_code == 200:
+        record = response.json()
+
+        experiment_type[pdb_id] = (
+            record[<em>"exptl"</em>]
+        )
+
+print(experiment_type)</code></pre>
+        </div>
+
+        <aside>
+          <h3>What this demonstrates</h3>
+
+          <p>
+            API requests, tabular parsing, biological database integration
+            and programmatic retrieval of protein, gene and structure
+            metadata.
+          </p>
+
+          <a
+            class="btn"
+            href="https://github.com/AmiliaStorm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open GitHub
+          </a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Insights -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Key insights</p>
+
+        <h2>
+          What the project demonstrates
+        </h2>
+      </div>
+
+      <div class="insights">
+        <article>
+          <h3>Database integration</h3>
+
+          <p>
+            Connected UniProt, Ensembl, ClinVar and PDB rather than
+            treating each source in isolation.
+          </p>
+        </article>
+
+        <article>
+          <h3>Structure comparison</h3>
+
+          <p>
+            Compared experimental evidence with computationally
+            predicted models.
+          </p>
+        </article>
+
+        <article>
+          <h3>Confidence-aware interpretation</h3>
+
+          <p>
+            Used prediction confidence and sequence coverage to avoid
+            overinterpreting uncertain regions.
+          </p>
+        </article>
+
+        <article>
+          <h3>Scientific programming</h3>
+
+          <p>
+            Used Python, Requests, Pandas, Biopython, PyMOL and
+            notebook-based workflows.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+
+  <footer>
+    <a class="brand" href="#top">
+      <span>AS</span>
+
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics & Data Science</small>
+      </div>
+    </a>
+
+    <p>© 2026 Amilia Storm</p>
+
+    <a href="mailto:AmiliaSt@hotmail.com">
+      Get in touch
+    </a>
+  </footer>
+
+  <script src="./ager.js?v=2"></script>
+</body>
+</html>
